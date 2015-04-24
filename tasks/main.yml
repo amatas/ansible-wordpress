@@ -2,7 +2,7 @@
 
 - { include: start.yml, tags: ['start'] }
 - { include: build.yml, tags: ['build'] }
-- { include: test.yml, tags: ['test'] }
+- { include: ../tests/main.yml, tags: ['test'] }
 
 - name: Install XDebug
   yum: name=php-pecl-xdebug state=present
