@@ -19,14 +19,27 @@
     --title={{ wordpress_name }}
     --admin_user={{ wordpress_adm_user }}
     --admin_password={{ wordpress_adm_pass }}
-    --admin_email={{ wordpress_adm_mail | match ("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$") }}
+    --admin_email={{ wordpress_adm_mail }}
     --path=/srv/wordpress/
   when: >
         wordpress_adm_user is defined and wordpress_adm_user and
-        wordpress_adm_mail is defined and wordpress_adm_mail and
+        wordpress_adm_mail is defined and wordpress_adm_mail | match ("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$") and
         wordpress_adm_pass is defined and wordpress_adm_pass and
         wordpress_fqdn is defined and wordpress_fqdn and
         wordpress_name is defined and wordpress_name
+  tags:
+    - start
+
+- name: Debug
+  debug: 
+    msg: >
+      wp core install --allow-root
+      --url={{ wordpress_fqdn }}
+      --title={{ wordpress_name }}
+      --admin_user={{ wordpress_adm_user }}
+      --admin_password={{ wordpress_adm_pass }}
+      --admin_email={{ wordpress_adm_mail }}
+      --path=/srv/wordpress/
   tags:
     - start
 
